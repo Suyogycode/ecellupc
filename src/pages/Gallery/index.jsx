@@ -4,14 +4,14 @@ import { X, ZoomIn, Camera, Calendar, MapPin } from 'lucide-react';
 
 // Enhanced Mock Data (You can move this to MockData.js later)
 const MEMORIES = [
-  { id: 1, src: "/assets/Group.jpeg", category: "The Core Team", date: "Jan 2024", title: "The Body and Soul of Ecell", size: "tall" },
-  { id: 2, src: "/assets/Meet2.jpg", category: "Meeting", date: "Feb 2024", title: "Core Team Meet", size: "short" },
-  { id: 3, src: "/assets/Meet1.jpeg", category: "Meeting", date: "Mar 2024", title: "Planning the future", size: "tall" },
-  { id: 4, src: "/assets/Kshitij.jpeg", category: "Second Round", date: "Apr 2024", title: "Our finance head selected for further round", size: "short" },
-  { id: 5, src: "/assets/Mentor.jpeg", category: "Mentorship", date: "Jan 2024", title: "Prof. Rathi's inpiring speech", size: "tall" },
-  { id: 6, src: "/assets/Meet3.jpeg", category: "Meeting", date: "May 2024", title: "Discusing the future plans", size: "short" },
-  { id: 7, src: "/assets/Eureka.jpeg", category: "Eureka", date: "Jun 2024", title: "IIC conducted Shaksham", size: "tall" },
-  { id: 8, src: "/assets/Seminar.jpeg", category: "Workshop", date: "Jul 2024", title: "Seminar", size: "short" },
+  { id: 1, src: "assets/Group.jpeg", category: "The Core Team", date: "Jan 2024", title: "The Body and Soul of Ecell", size: "tall" },
+  { id: 2, src: "assets/Meet2.jpg", category: "Meeting", date: "Feb 2024", title: "Core Team Meet", size: "short" },
+  { id: 3, src: "assets/Meet1.jpeg", category: "Meeting", date: "Mar 2024", title: "Planning the future", size: "tall" },
+  { id: 4, src: "assets/Kshitij.jpeg", category: "Second Round", date: "Apr 2024", title: "Our finance head selected for further round", size: "short" },
+  { id: 5, src: "assets/Mentor.jpeg", category: "Mentorship", date: "Jan 2024", title: "Prof. Rathi's inpiring speech", size: "tall" },
+  { id: 6, src: "assets/Meet3.jpeg", category: "Meeting", date: "May 2024", title: "Discusing the future plans", size: "short" },
+  { id: 7, src: "assets/Eureka.jpeg", category: "Eureka", date: "Jun 2024", title: "IIC conducted Shaksham", size: "tall" },
+  { id: 8, src: "assets/Seminar.jpeg", category: "Workshop", date: "Jul 2024", title: "Seminar", size: "short" },
 ];
 
 // --- Sub-Component: The Alive Memory Card ---
@@ -43,7 +43,7 @@ const MemoryCard = ({ img, setSelectedId }) => {
           />
           
           {/* Cinematic Vignette Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-primary-dark via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity"></div>
+          <div className="absolute inset-0 bg-linear-to-t from-primary-dark via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity"></div>
         </div>
 
         {/* The "Living" Content Reveal */}
@@ -108,7 +108,7 @@ const Gallery = () => {
           <span className="text-accent text-xs font-bold uppercase tracking-[0.2em]">Our Visual Legacy</span>
         </div>
         <h1 className="text-6xl md:text-8xl font-display font-bold text-white mb-6">
-          Living <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-orange-500">Memories</span>
+          Living <span className="text-transparent bg-clip-text bg-linear-to-r from-accent to-orange-500">Memories</span>
         </h1>
         <p className="text-gray-400 max-w-2xl mx-auto text-lg font-light">
           Moments frozen in time. From the chaos of the hackathons to the silence of the brainstorming sessions.
@@ -133,7 +133,7 @@ const Gallery = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-primary-dark/95 backdrop-blur-xl flex items-center justify-center p-4"
+            className="fixed inset-0 z-100 bg-primary-dark/95 backdrop-blur-xl flex items-center justify-center p-4"
             onClick={() => setSelectedId(null)}
           >
             {/* Close Button */}

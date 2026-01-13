@@ -3,7 +3,7 @@ import { TEAM_MEMBERS } from '../../data/MockData';
 
 const TeamCard = ({ member }) => {
   return (
-    <div className="group relative w-full h-[400px] rounded-2xl overflow-hidden cursor-pointer">
+    <div className="group relative w-full h-100 rounded-2xl overflow-hidden cursor-pointer">
       {/* Image */}
       <img 
         src={member.image} 
@@ -12,7 +12,7 @@ const TeamCard = ({ member }) => {
       />
       
       {/* Overlay Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-t from-primary-dark via-primary-dark/50 to-transparent opacity-80 transition-opacity duration-300"></div>
+      <div className="absolute inset-0 bg-linear-to-t from-primary-dark via-primary-dark/50 to-transparent opacity-80 transition-opacity duration-300"></div>
 
       {/* Text Content */}
       <div className="absolute bottom-0 left-0 w-full p-6 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">

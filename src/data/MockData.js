@@ -51,7 +51,7 @@ export const TEAM_MEMBERS = [
     id: 1,
     name: 'Deepak Mishra',
     role: 'President of Ecell',
-    image: '/assets/Deepak.png',
+    image: 'assets/Deepak.png',
     linkedin: '#',
     email: 'deepak@emial'
   },
@@ -59,7 +59,7 @@ export const TEAM_MEMBERS = [
     id: 2,
     name: 'Pratyasha Singh',
     role: 'Vice President',
-    image: '/assets/Pratyasha.png',
+    image: 'assets/Pratyasha.png',
     linkedin: '#',
     email: 'pratyasha@email'
   },
@@ -67,7 +67,7 @@ export const TEAM_MEMBERS = [
     id: 3,
     name: 'Krishna Mishra',
     role: 'Convener',
-    image: '/assets/Krishna.png',
+    image: 'assets/Krishna.png',
     linkedin: '#',
     email: 'krishna@email'
   },
@@ -75,7 +75,7 @@ export const TEAM_MEMBERS = [
     id: 4,
     name: 'Subhi Tripathi',
     role: 'Co-convener',
-    image: '/assets/Subhi.png',
+    image: 'assets/Subhi.png',
     linkedin: '#',
     email: 'subhi@email'
   },
@@ -83,7 +83,7 @@ export const TEAM_MEMBERS = [
     id: 5,
     name: 'Kshitij Baranwal',
     role: 'Finance Head',
-    image: '/assets/Kshitij.png',
+    image: 'assets/Kshitij.png',
     linkedin: '#',
     email: 'kshitiji@email'
   },
@@ -91,7 +91,7 @@ export const TEAM_MEMBERS = [
     id: 6,
     name: 'Jagriti Agrawal',
     role: 'Creative Head',
-    image: '/assets/Jagriti.png',
+    image: 'assets/Jagriti.png',
     linkedin: '#',
     email: 'jagriti@email'
   },
@@ -99,7 +99,7 @@ export const TEAM_MEMBERS = [
     id: 7,
     name: 'Tushar Keshari',
     role: 'Social Head',
-    image: '/assets/Tushar.png',
+    image: 'assets/Tushar.png',
     linkedin: '#',
     email: 'tushar@email'
   },
@@ -107,7 +107,7 @@ export const TEAM_MEMBERS = [
     id: 8,
     name: 'Priyanshu Singh',
     role: 'Event Head',
-    image: '/assets/Priyanshu.png',
+    image: 'assets/Priyanshu.png',
     linkedin: '#',
     email: 'priyanshu@email'
   },
@@ -115,7 +115,7 @@ export const TEAM_MEMBERS = [
     id: 9,
     name: 'Harsh Singh',
     role: 'PR Head',
-    image: '/assets/Harsh2.png',
+    image: 'assets/Harsh2.png',
     linkedin: '#',
     email: 'harsh@email'
   },
@@ -123,7 +123,7 @@ export const TEAM_MEMBERS = [
     id: 11,
     name: 'Sanjeevni Rajesh',
     role: 'Creative team',
-    image: '/assets/Sanjeevni.png',
+    image: 'assets/Sanjeevni.png',
     linkedin: '#',
     email: 'sanjeevni@email'
   },
@@ -131,7 +131,7 @@ export const TEAM_MEMBERS = [
     id: 12,
     name: 'Harsh Pandey',
     role: 'Creative team',
-    image: '/assets/Harsh1.png',
+    image: 'assets/Harsh1.png',
     linkedin: '#',
     email: 'harsh@email'
   },
@@ -139,7 +139,7 @@ export const TEAM_MEMBERS = [
     id: 13,
     name: 'Ashmita Raghuvanshi',
     role: 'Social media',
-    image: '/assets/Ashmita.png',
+    image: 'assets/Ashmita.png',
     linkedin: '#',
     email: 'ashmita@email'
   },
@@ -147,7 +147,7 @@ export const TEAM_MEMBERS = [
     id: 14,
     name: 'Khushi Jaiswal',
     role: 'Finance team',
-    image: '/assets/Khushi.png',
+    image: 'assets/Khushi.png',
     linkedin: '#',
     email: 'khushi@email'
   },
@@ -155,7 +155,7 @@ export const TEAM_MEMBERS = [
     id: 15,
     name: 'Swakriti Jaiswal',
     role: 'Event Management',
-    image: '/assets/Swakriti.png',
+    image: 'assets/Swakriti.png',
     linkedin: '#',
     email: 'swakriti@email'
   },
@@ -163,7 +163,7 @@ export const TEAM_MEMBERS = [
     id: 16,
     name: 'Oshika Singh',
     role: 'Event Management',
-    image: '/assets/Oshika.png',
+    image: 'assets/Oshika.png',
     linkedin: '#',
     email: 'rishu@email'
   },
@@ -171,7 +171,7 @@ export const TEAM_MEMBERS = [
     id: 17,
     name: 'Aditya Dubey',
     role: 'Tech team',
-    image: '/assets/Aditya.png',
+    image: 'assets/Aditya.png',
     linkedin: '#',
     email: 'rishu@email'
   },
@@ -179,7 +179,7 @@ export const TEAM_MEMBERS = [
     id: 18,
     name: 'Rishu Vishwakarma',
     role: 'Tech team',
-    image: '/assets/Rishu.png',
+    image: 'assets/Rishu.png',
     linkedin: '#',
     email: 'rishu@email'
   },
@@ -187,7 +187,7 @@ export const TEAM_MEMBERS = [
     id: 10,
     name: 'Suyogy Shah',
     role: 'Tech Head',
-    image: '/assets/Suyogy.jpeg',
+    image: 'assets/Suyogy.jpeg',
     linkedin: '#',
     email: 'suyogy@email'
   },

@@ -8,4 +8,5 @@ export default defineConfig({
     react(),
     tailwindcss(), // Add this plugin
   ],
+  base: "/ecellupc/",  // <--- Add this line here
 })
