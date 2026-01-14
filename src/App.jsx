@@ -2,10 +2,9 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-//import ParticlesBackground from './components/ParticlesBackground';
-import CursorTrail from './components/CursorTrail';
+import CursorTrail from './components/CursorTrail'; // Keep this? Or delete if unwanted.
 
-// Import the actual pages
+// Import Pages
 import Home from './pages/Home';
 import About from './pages/About';
 import Initiatives from './pages/Initiatives';
@@ -27,21 +26,13 @@ function App() {
     <>
       <ScrollToTop />
       
-      {/* --- 1. GLOBAL BACKGROUND (Particles) --- */}
-      {/* Fixed position ensures it covers the screen without creating extra scroll space */}
-      {/* <div className="fixed inset-0 z-0 pointer-events-none">*/}
-      {/*   <ParticlesBackground />*/}
-      {/* </div>*/}
-
-      {/* --- 2. CURSOR TRAIL --- */}
+      {/* Cursor Trail (Optional - Delete this line if you want it gone too) */}
       <CursorTrail />
 
-      {/* --- 3. MAIN CONTENT --- */}
-      {/* relative & z-10 ensures text sits ON TOP of the particles */}
+      {/* Main Content */}
       <div className="relative z-10 flex flex-col min-h-screen">
         <Navbar />
         
-        {/* 'grow' pushes the footer to the bottom */}
         <main className="grow">
           <Routes>
             <Route path="/" element={<Home />} />
