@@ -171,7 +171,7 @@ export const TEAM_MEMBERS = [
     id: 17,
     name: 'Neeraj Prajapati',
     role: 'PR team',
-    image: 'assets/Neeraj.png',
+    image: 'assets/Neeraj.jpeg',
     linkedin: '#',
     email: 'rishu@email'
   },
