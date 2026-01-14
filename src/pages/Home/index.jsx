@@ -26,7 +26,7 @@ const SparkVisual = () => {
 const BreathingStats = () => {
   const stats = [
     { label: "Startups Ideas Incubated", value: "50+" },
-    { label: "Valuation Raised", value: "$5k+" },
+    { label: "Valuation Raised", value: "₹5lac+" },
     { label: "Community Strength", value: "10K+" },
     { label: "Years Legacy", value: "2+" },
   ];

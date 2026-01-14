@@ -169,6 +169,14 @@ export const TEAM_MEMBERS = [
   },
   {
     id: 17,
+    name: 'Neeraj Prajapati',
+    role: 'PR team',
+    image: 'assets/Neeraj.png',
+    linkedin: '#',
+    email: 'rishu@email'
+  },
+  {
+    id: 18,
     name: 'Aditya Dubey',
     role: 'Tech team',
     image: 'assets/Aditya.png',
@@ -176,7 +184,7 @@ export const TEAM_MEMBERS = [
     email: 'rishu@email'
   },
   {
-    id: 18,
+    id: 19,
     name: 'Rishu Vishwakarma',
     role: 'Tech team',
     image: 'assets/Rishu.png',
