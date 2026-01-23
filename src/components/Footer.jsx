@@ -8,7 +8,7 @@ const Footer = () => {
     { Icon: Twitter, url: "https://twitter.com" },
     { Icon: Instagram, url: "https://www.instagram.com/ecell_upcollege/" }, // Added https:// to ensure it works
     { Icon: Linkedin, url: "https://www.linkedin.com/company/e-cell-upcollege" },
-    { Icon: Mail, url: "mailto:contact@ecellupc.org" }
+    { Icon: Mail, url: "mailto:ecellupcollege@gmail.com" }
   ];
 
   return (

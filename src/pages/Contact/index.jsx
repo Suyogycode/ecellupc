@@ -67,14 +67,14 @@ const CONTACT_INFO = [
   {
     icon: Mail,
     label: "Email Us",
-    value: "connect@ecell.in",
-    action: "mailto:connect@ecell.in"
+    value: "ecellupcollege@gmail.com",
+    action: "mailto:ecellupcollege@gmail.com"
   },
   {
     icon: Phone,
     label: "Call Us",
-    value: "+91 98765 43210",
-    action: "tel:+919876543210"
+    value: "+91 8108915402",
+    action: "tel:+918108915402"
   }
 ];
 

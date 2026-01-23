@@ -16,9 +16,8 @@ const MEMORIES = [
   { id: 10, type: "image", src: "assets/Mentor.jpeg", category: "Mentorship", date: "Jan 2024", title: "Prof. Rathi's inspiring speech", size: "tall" },
   { id: 11, type: "image", src: "assets/Meet3.jpeg", category: "Meeting", date: "May 2024", title: "Discussing the future plans", size: "short" },
   { id: 12, type: "image", src: "assets/Eureka.jpeg", category: "Eureka", date: "Jun 2024", title: "IIC conducted Shaksham", size: "tall" },
-  { id: 13, type: "image", src: "assets/Shaksham5.jpeg", category: "Eureka", date: "Feb 2024", title: "Shaksham 2.0", size: "short" },
-  { id: 14, type: "video", src: "assets/ShakshamVideo.mp4", category: "Eureka", date: "Feb 2024", title: "Shaksham 2.0", size: "short" },
-  { id: 15, type: "image", src: "assets/ClassAnnouncement.jpeg", category: "Eureka", date: "Feb 2024", title: "Announcing the Shaksham program", size: "short" },
+  { id: 13, type: "video", src: "assets/ShakshamVideo.mp4", category: "Eureka", date: "Feb 2024", title: "Shaksham 2.0", size: "short" },
+  { id: 14, type: "image", src: "assets/ClassAnnouncement.jpeg", category: "Eureka", date: "Feb 2024", title: "Announcing the Shaksham program", size: "short" },
 ];
 
 // --- Sub-Component: The Alive Memory Card ---
