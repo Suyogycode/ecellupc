@@ -102,12 +102,10 @@ const Home = () => {
     <div className="relative min-h-screen bg-primary-dark/80 overflow-hidden">
       
       {/* 1. FIXED PARALLAX BACKGROUND LAYER */}
-        <motion.div 
-          style={{ y: yBg }}
-          // FIX: Made height 120vh and pulled it up by 10vh. 
-          // Now it has "extra" space on top and bottom to move without creating gaps.
-          className="fixed -top-[10vh] left-0 z-0 w-full h-[120vh]"
-        >
+      <motion.div 
+        style={{ y: yBg }}
+        className="fixed inset-0 z-0 w-full h-full"
+      >
         <img 
           src="https://content.jdmagicbox.com/comp/varanasi/28/0542p542std1402828/catalogue/uday-pratap-college-bhojpur-varanasi-colleges-2zobq4h.jpg" 
           alt="Campus Background" 
