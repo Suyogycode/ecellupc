@@ -38,40 +38,40 @@ const EventCalendar = () => {
   }, []);
 
   return (
-    <section className="mt-20 border-t border-white/10 pt-16">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        
+    <section className="mt-16 md:mt-20 border-t border-white/10 pt-12 md:pt-16">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
+
         {/* LEFT: The "Next Big Event" Countdown */}
-        <div className="bg-gradient-to-br from-purple-900/50 to-primary-dark border border-white/10 p-8 rounded-3xl relative overflow-hidden group">
+        <div className="bg-gradient-to-br from-purple-900/50 to-primary-dark border border-white/10 p-6 md:p-8 rounded-2xl md:rounded-3xl relative overflow-hidden group">
           {/* Decorative Glow */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-accent/20 blur-[100px] rounded-full pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-48 md:w-64 h-48 md:h-64 bg-accent/20 blur-[100px] rounded-full pointer-events-none"></div>
 
           <div className="relative z-10">
-            <span className="inline-block py-1 px-3 rounded-full bg-accent/20 text-accent text-xs font-bold uppercase tracking-wider mb-4 border border-accent/20">
+            <span className="inline-block py-1 px-2 md:px-3 rounded-full bg-accent/20 text-accent text-[10px] md:text-xs font-bold uppercase tracking-wider mb-3 md:mb-4 border border-accent/20">
               Upcoming Flagship Event
             </span>
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-2">Founders Talk</h2>
-            <p className="text-gray-300 mb-8">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold text-white mb-2">Founders Talk</h2>
+            <p className="text-gray-300 text-sm md:text-base mb-6 md:mb-8">
               Interactive session with unicorns on the future of Indian Entrepreneurship.
             </p>
 
             {/* The Real-Time Countdown Grid */}
-            <div className="flex flex-wrap gap-3 mb-8">
+            <div className="flex flex-wrap gap-2 md:gap-3 mb-6 md:mb-8">
               <CountdownUnit value={timeLeft.days} label="Days" />
               <CountdownUnit value={timeLeft.hours} label="Hrs" />
               <CountdownUnit value={timeLeft.minutes} label="Mins" />
               <CountdownUnit value={timeLeft.seconds} label="Secs" />
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 text-sm text-gray-400 border-t border-white/10 pt-6">
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 text-xs md:text-sm text-gray-400 border-t border-white/10 pt-4 md:pt-6">
               <div className="flex items-center gap-2">
-                <Calendar className="text-accent" size={16} /> 5th Feb, 2026
+                <Calendar className="text-accent flex-shrink-0" size={16} /> 5th Feb, 2026
               </div>
               <div className="flex items-center gap-2">
-                <Clock className="text-accent" size={16} /> 11:00 AM
+                <Clock className="text-accent flex-shrink-0" size={16} /> 11:00 AM
               </div>
               <div className="flex items-center gap-2">
-                <MapPin className="text-accent" size={16} /> Rajshree Hall
+                <MapPin className="text-accent flex-shrink-0" size={16} /> Rajshree Hall
               </div>
             </div>
           </div>
@@ -109,8 +109,8 @@ const EventCalendar = () => {
               </div>
             </div>
 
-             {/* Event Item 3 */}
-             <div className="flex group">
+            {/* Event Item 3 */}
+            <div className="flex group">
               <div className="flex flex-col items-center mr-4">
                 <div className="w-3 h-3 rounded-full bg-gray-600 mt-2"></div>
                 <div className="w-0.5 h-full bg-white/10 group-last:bg-transparent mt-1"></div>

@@ -32,11 +32,11 @@ const MemoryCard = ({ img, setSelectedId }) => {
       onClick={() => setSelectedId(img.id)}
     >
       <motion.div
-        whileHover={{ 
-          scale: 1.02, 
-          rotateX: 2, 
+        whileHover={{
+          scale: 1.02,
+          rotateX: 2,
           rotateY: 2,
-          z: 50 
+          z: 50
         }}
         className="relative overflow-hidden rounded-2xl bg-primary-light border border-white/10 cursor-pointer"
       >
@@ -49,26 +49,26 @@ const MemoryCard = ({ img, setSelectedId }) => {
               className="w-full h-full object-cover grayscale-0 md:grayscale-[0.8] md:group-hover:grayscale-0 transition-all duration-700 ease-in-out scale-100 md:scale-105 md:group-hover:scale-110"
               muted
               preload="metadata" // Tells browser to load just the 1st frame
-              // Removed autoPlay and loop here!
+            // Removed autoPlay and loop here!
             />
           ) : (
             /* STANDARD IMAGE */
-            <img 
-              src={img.src} 
-              alt={img.title} 
+            <img
+              src={img.src}
+              alt={img.title}
               className="w-full h-full object-cover grayscale-0 md:grayscale-[0.8] md:group-hover:grayscale-0 transition-all duration-700 ease-in-out scale-100 md:scale-105 md:group-hover:scale-110"
             />
           )}
-          
+
           {/* Cinematic Vignette Overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-primary-dark via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity"></div>
         </div>
 
         {/* The "Living" Content Reveal */}
         <div className="absolute inset-0 p-6 flex flex-col justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-          
+
           {/* Floating Details */}
-          <motion.div 
+          <motion.div
             initial={{ y: 20 }}
             whileHover={{ y: 0 }}
             className="bg-black/40 backdrop-blur-md p-4 rounded-xl border border-white/10 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500"
@@ -83,7 +83,7 @@ const MemoryCard = ({ img, setSelectedId }) => {
             </div>
             <h3 className="text-white font-display font-bold text-lg">{img.title}</h3>
           </motion.div>
-          
+
           {/* Zoom/Play Icon visual cue */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-white/10 rounded-full backdrop-blur-sm flex items-center justify-center scale-0 group-hover:scale-100 transition-transform duration-300 delay-100">
             {img.type === 'video' ? (
@@ -104,7 +104,7 @@ const MemoryCard = ({ img, setSelectedId }) => {
 const Gallery = () => {
   const [selectedId, setSelectedId] = useState(null);
   const containerRef = useRef(null);
-  
+
   // Smooth Parallax for the Header
   const { scrollYProgress } = useScroll();
   const yHeader = useTransform(scrollYProgress, [0, 0.5], [0, -100]);
@@ -115,36 +115,36 @@ const Gallery = () => {
 
   return (
     <div className="min-h-screen bg-primary-dark relative overflow-hidden" ref={containerRef}>
-      
+
       {/* 1. ATMOSPHERE: Film Grain Overlay */}
       <div className="fixed inset-0 pointer-events-none z-0 opacity-[0.03] mix-blend-overlay">
         <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
           <filter id="noiseFilter">
-            <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+            <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
           </filter>
-          <rect width="100%" height="100%" filter="url(#noiseFilter)"/>
+          <rect width="100%" height="100%" filter="url(#noiseFilter)" />
         </svg>
       </div>
 
       {/* 2. HEADER SECTION */}
-      <motion.div 
+      <motion.div
         style={{ y: yHeader, opacity: opacityHeader }}
-        className="relative z-10 pt-40 pb-20 px-6 text-center"
+        className="relative z-10 pt-32 md:pt-40 pb-12 md:pb-20 px-4 md:px-6 text-center"
       >
-        <div className="inline-block mb-4 p-2 px-4 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm">
-          <span className="text-accent text-xs font-bold uppercase tracking-[0.2em]">Our Visual Legacy</span>
+        <div className="inline-block mb-3 md:mb-4 p-2 px-3 md:px-4 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm">
+          <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.2em]">Our Visual Legacy</span>
         </div>
-        <h1 className="text-6xl md:text-8xl font-display font-bold text-white mb-6">
+        <h1 className="text-4xl md:text-6xl lg:text-8xl font-display font-bold text-white mb-4 md:mb-6 leading-tight">
           Living <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-orange-500">Memories</span>
         </h1>
-        <p className="text-gray-400 max-w-2xl mx-auto text-lg font-light">
+        <p className="text-gray-400 max-w-2xl mx-auto text-base md:text-lg font-light px-4">
           Moments frozen in time. From the chaos of the hackathons to the silence of the brainstorming sessions.
         </p>
       </motion.div>
 
       {/* 3. MASONRY GRID */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pb-32">
-        <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 pb-20 md:pb-32">
+        <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 md:gap-6 space-y-4 md:space-y-6">
           {MEMORIES.map((img) => (
             <MemoryCard key={img.id} img={img} setSelectedId={setSelectedId} />
           ))}
@@ -167,24 +167,24 @@ const Gallery = () => {
             </button>
 
             {/* Modal Content */}
-            <motion.div 
+            <motion.div
               layoutId={`img-${selectedId}`}
               className="relative max-w-5xl w-full max-h-[90vh] bg-black rounded-xl overflow-hidden shadow-2xl border border-white/10 flex flex-col lg:flex-row"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="grid grid-cols-1 lg:grid-cols-3 h-full w-full">
-                
+
                 {/* The Media (Image OR Video) */}
                 <div className="lg:col-span-2 bg-black flex items-center justify-center relative">
                   {selectedItem.type === 'video' ? (
-                    <video 
+                    <video
                       src={selectedItem.src}
                       className="max-h-[80vh] w-full object-contain"
                       controls
                       autoPlay // Keeps playing automatically ONLY in the modal
                     />
                   ) : (
-                    <img 
+                    <img
                       src={selectedItem.src}
                       className="max-h-[80vh] w-auto object-contain"
                       alt={selectedItem.title}
@@ -202,7 +202,7 @@ const Gallery = () => {
                       {selectedItem.title}
                     </h2>
                     <p className="text-gray-400 leading-relaxed">
-                       A snapshot of innovation and teamwork at E-Cell UPC.
+                      A snapshot of innovation and teamwork at E-Cell UPC.
                     </p>
                   </div>
 
@@ -215,7 +215,7 @@ const Gallery = () => {
                       <MapPin size={18} className="text-accent" />
                       <span>Rajshree Hall, UPC</span>
                     </div>
-                    
+
                     <button className="w-full py-3 mt-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-white font-bold transition-all">
                       Download High-Res
                     </button>

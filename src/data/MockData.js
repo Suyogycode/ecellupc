@@ -1,11 +1,12 @@
-import { Monitor, Users, Lightbulb, Rocket, Trophy, Calendar, MapPin } from 'lucide-react';
+import {  Users, Lightbulb, Rocket, Trophy, Heart, TrendingUp, FileText, } from 'lucide-react';
 
 export const NAV_LINKS = [
-  { name: 'Home', path: '/' },
   { name: 'About Us', path: '/about' },
   { name: 'Initiatives', path: '/initiatives' },
-  { name: 'Blogs', path: '/blog' },  // <--- ADD THIS LINE
+  { name: 'Blogs', path: '/blog' },
   { name: 'Gallery', path: '/gallery' },
+  { name: 'Team', path: '/team' },
+  { name: 'Startups', path: '/startups' },
   { name: 'Contact', path: '/contact' },
 ];
 
@@ -27,7 +28,7 @@ export const INITIATIVES = [
     color: 'from-blue-400 to-purple-600'
   },
   {
-    id: 'esummit',
+    id: 'campus-ambassador',
     title: 'Campus Ambassador',
     tagline: 'Chance to gain leadership quality',
     description: 'The campus ambassador selection on the campus of UP college',
@@ -46,160 +47,67 @@ export const INITIATIVES = [
   }
 ];
 
-export const TEAM_MEMBERS = [
+export const ABOUT_VALUES = [
   {
-    id: 1,
-    name: 'Deepak Mishra',
-    role: 'President of Ecell',
-    image: 'assets/Deepak.png',
-    linkedin: '#',
-    email: 'deepak@emial'
+    icon: Lightbulb,
+    title: 'Innovation First',
+    description: 'We believe in pushing boundaries and encouraging unconventional thinking.'
   },
   {
-    id: 2,
-    name: 'Pratyasha Singh',
-    role: 'Vice President',
-    image: 'assets/Pratyasha.png',
-    linkedin: '#',
-    email: 'pratyasha@email'
+    icon: Users,
+    title: 'Community Driven',
+    description: 'Building a network of passionate entrepreneurs supporting each other.'
   },
   {
-    id: 3,
-    name: 'Krishna Mishra',
-    role: 'Convener',
-    image: 'assets/Krishna.png',
-    linkedin: '#',
-    email: 'krishna@email'
+    icon: Heart,
+    title: 'Student Centric',
+    description: 'Every initiative is designed keeping student needs and aspirations at the core.'
   },
   {
-    id: 4,
-    name: 'Shubhi Tripathi',
-    role: 'Co-convener',
-    image: 'assets/Subhi.png',
-    linkedin: '#',
-    email: 'subhi@email'
+    icon: TrendingUp,
+    title: 'Growth Mindset',
+    description: 'Continuous learning and adaptation is our way forward.'
+  }
+];
+
+export const GROW_RESUME_OPPORTUNITIES = [
+  {
+    icon: Users,
+    title: 'Campus Ambassador Program',
+    description: 'Represent E-Cell UPC in your network and gain leadership experience.',
+    perks: ['Certificate', 'Letter of Recommendation', 'Networking'],
+    link: '/initiatives#campus-ambassador'
   },
   {
-    id: 5,
-    name: 'Kshitij Baranwal',
-    role: 'Finance Head',
-    image: 'assets/Kshitij.png',
-    linkedin: '#',
-    email: 'kshitiji@email'
+    icon: Trophy,
+    title: 'Event Volunteer',
+    description: 'Be part of organizing flagship events like Eureka! and gain hands-on experience.',
+    perks: ['Event Management Skills', 'Certificate', 'Goodies'],
+    link: '/contact'
   },
   {
-    id: 6,
-    name: 'Jagriti Agrawal',
-    role: 'Creative Head',
-    image: 'assets/Jagriti.png',
-    linkedin: '#',
-    email: 'jagriti@email'
+    icon: Rocket,
+    title: 'Startup Internships',
+    description: 'Work with startups incubated at E-Cell and get real-world startup experience.',
+    perks: ['Stipend', 'Experience Letter', 'Skill Development'],
+    link: '/startups'
   },
   {
-    id: 7,
-    name: 'Tushar Keshari',
-    role: 'Social Head',
-    image: 'assets/Tushar.png',
-    linkedin: '#',
-    email: 'tushar@email'
-  },
-  {
-    id: 8,
-    name: 'Priyanshu Singh',
-    role: 'Event Head',
-    image: 'assets/Priyanshu.png',
-    linkedin: '#',
-    email: 'priyanshu@email'
-  },
-  {
-    id: 9,
-    name: 'Harsh Singh',
-    role: 'PR Head',
-    image: 'assets/Harsh2.png',
-    linkedin: '#',
-    email: 'harsh@email'
-  },
-  {
-    id: 11,
-    name: 'Sanjeevni Rajesh',
-    role: 'Creative team',
-    image: 'assets/Sanjeevni.png',
-    linkedin: '#',
-    email: 'sanjeevni@email'
-  },
-  {
-    id: 12,
-    name: 'Harsh Pandey',
-    role: 'Creative team',
-    image: 'assets/Harsh1.png',
-    linkedin: '#',
-    email: 'harsh@email'
-  },
-  {
-    id: 13,
-    name: 'Ashmita Raghuvanshi',
-    role: 'Social media',
-    image: 'assets/Ashmita.png',
-    linkedin: '#',
-    email: 'ashmita@email'
-  },
-  {
-    id: 14,
-    name: 'Khushi Jaiswal',
-    role: 'Finance team',
-    image: 'assets/Khushi.png',
-    linkedin: '#',
-    email: 'khushi@email'
-  },
-  {
-    id: 15,
-    name: 'Swakriti Jaiswal',
-    role: 'Event Management',
-    image: 'assets/Swakriti.png',
-    linkedin: '#',
-    email: 'swakriti@email'
-  },
-  {
-    id: 16,
-    name: 'Oshika Singh',
-    role: 'Event Management',
-    image: 'assets/Oshika.png',
-    linkedin: '#',
-    email: 'rishu@email'
-  },
-  {
-    id: 17,
-    name: 'Niraj Prajapati',
-    role: 'PR team',
-    image: 'assets/Neeraj.jpeg',
-    linkedin: '#',
-    email: 'rishu@email'
-  },
-  {
-    id: 18,
-    name: 'Aditya Dubey',
-    role: 'Tech team',
-    image: 'assets/Aditya.png',
-    linkedin: '#',
-    email: 'rishu@email'
-  },
-  {
-    id: 19,
-    name: 'Rishu Vishwakarma',
-    role: 'Tech team',
-    image: 'assets/Rishu.png',
-    linkedin: '#',
-    email: 'rishu@email'
-  },
-  {
-    id: 10,
-    name: 'Suyogy Shah',
-    role: 'Tech Head',
-    image: 'assets/Suyogy.jpeg',
-    linkedin: '#',
-    email: 'suyogy@email'
-  },
-  
+    icon: FileText,
+    title: 'Content Creation',
+    description: 'Write blogs, create social media content, and build your personal brand.',
+    perks: ['Portfolio Building', 'Byline Credit', 'Exposure'],
+    link: '/blog'
+  }
+];
+
+export const GROW_RESUME_BENEFITS = [
+  'Add valuable experience to your resume',
+  'Build a strong professional network',
+  'Develop leadership and teamwork skills',
+  'Get recognized by industry leaders',
+  'Access exclusive workshops and mentorship',
+  'Earn certificates and recommendations'
 ];
 
 export const TIMELINE_DATA = [
@@ -207,112 +115,6 @@ export const TIMELINE_DATA = [
   { year: '2024', title: 'First Eureka!', description: 'Hosted the first-ever Eureka event with 200+ attendees.' },
   { year: '2025', title: 'Second Eureka!', description: 'Received participation from over all the faculties.' },
   { year: '2026', title: 'Year of Ambition', description: 'Looking forward for a year of fostering innovation.' },
-];
-
-// ... existing imports
-// Add these mock images if you don't have them, or just use the URLs below
-
-export const BLOG_CATEGORIES = ["All", "Tech", "Strategy", "Finance", "Student Life"];
-
-export const BLOG_POSTS = [
-  {
-    id: 1,
-    title: "The AI Revolution in India: Beyond the Hype",
-    excerpt: "How Indian startups are moving from wrapper-APIs to building core foundational models. A deep dive into the ecosystem shifts in Bengaluru and Mumbai.",
-    author: {
-      name: "Aditya Rao",
-      role: "Tech Lead",
-      avatar: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100&q=80"
-    },
-    category: "Tech",
-    readTime: "8 min read",
-    image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1200&q=80",
-    size: "large", // Will span 2 cols and 2 rows
-    content: `
-      <h2>The Shift is Real</h2>
-      <p>For years, 'AI' in India meant chatbots. Today, we are seeing a fundamental shift.</p>
-      <blockquote>"The next unicorn won't just use AI; it will be native to it."</blockquote>
-      <p>We analyzed 50+ startups in the IITB incubation center. 60% are now integrating LLMs into their core workflow, not just as a support tool.</p>
-    `
-  },
-  {
-    id: 2,
-    title: "Bootstrapping vs VC: The Eternal Dilemma",
-    excerpt: "Why raising $1M might be the worst thing for your early-stage startup. Lessons from founders who rejected the term sheet.",
-    author: {
-      name: "Meera Kapoor",
-      role: "Alumni Relations",
-      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80"
-    },
-    category: "Strategy",
-    readTime: "5 min read",
-    image: "https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=800&q=80",
-    size: "tall", // Will span 1 col but 2 rows
-    content: `
-      <h2>The Trap of Easy Money</h2>
-      <p>Validation is not money in the bank. Validation is paying customers.</p>
-    `
-  },
-  {
-    id: 3,
-    title: "DeFi for Gen Z",
-    excerpt: "Making decentralized finance accessible to the student population.",
-    author: {
-      name: "Rohan Das",
-      role: "Finance Club",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80"
-    },
-    category: "Finance",
-    readTime: "4 min read",
-    image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800&q=80",
-    size: "normal",
-    content: "<p>Blockchain is more than just crypto trading...</p>"
-  },
-  {
-    id: 4,
-    title: "Balancing Academics and a Startup",
-    excerpt: "A survival guide for student entrepreneurs. How to hack your attendance and still get a 9.0 CPI.",
-    author: {
-      name: "Sriya Verma",
-      role: "Content Team",
-      avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&q=80"
-    },
-    category: "Student Life",
-    readTime: "6 min read",
-    image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&q=80",
-    size: "wide", // Will span 2 cols but 1 row
-    content: "<p>Sleep, Grades, Startup. Pick two? No, pick a better schedule.</p>"
-  },
-  {
-    id: 5,
-    title: "Green Energy Grid",
-    excerpt: "The hardware startups solving India's power distribution crisis.",
-    author: {
-      name: "Karan Singh",
-      role: "Energy Lead",
-      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=80"
-    },
-    category: "Tech",
-    readTime: "7 min read",
-    image: "https://images.unsplash.com/photo-1473341304170-5799a2331139?w=800&q=80",
-    size: "normal",
-    content: "<p>Solar is cheap. Storage is expensive. That is where the opportunity lies.</p>"
-  },
-  {
-    id: 6,
-    title: "The Art of the Pitch Deck",
-    excerpt: "We reviewed 100+ decks. Here are the 5 slides that investors actually look at.",
-    author: {
-      name: "Editor's Desk",
-      role: "E-Cell Core",
-      avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100&q=80"
-    },
-    category: "Strategy",
-    readTime: "10 min read",
-    image: "https://images.unsplash.com/photo-1559136555-930d72f1d300?w=800&q=80",
-    size: "tall",
-    content: "<p>Stop putting the 'Thank You' slide. Ask for the money.</p>"
-  }
 ];
 
 export const HOME_FEATURES = [
@@ -337,3 +139,272 @@ export const HOME_FEATURES = [
     icon: "🤝"
   }
 ];
+
+// TODO: Deepak bhaiya mail
+// TODO: Update images for everyone
+// TODO: Add more members for 2023-24 and 2022-23 when data will be available
+// TODO: Add IIC Heads Data
+// YEAR-WISE TEAM DATA STRUCTURE
+export const TEAMS_BY_YEAR = {
+  '2024-25': {
+    iicHeads: [
+      {
+        id: 101,
+        name: 'Prof. Ashutosh Gupta',
+        role: 'President',
+        team: 'IIC UPC',
+        image: 'assets/ashutosh_sir.png',
+        linkedin: 'https://www.linkedin.com/in/ashutosh-gupta-a74b7810/',
+        email: 'ashu1809@gmail.com'
+      },
+      {
+        id: 103,
+        name: 'Dr. Deo Narayan Singh',
+        role: 'Convenor',
+        team: 'IIC UPC',
+        image: 'assets/deo_Sir.png',
+        linkedin: 'https://www.linkedin.com/in/dr-deo-narayan-singh-840524125/',
+        email: 'sdeonarayan@gmail.com'
+      },
+      {
+        id: 104,
+        name: 'Shri. Satya Sharan Mishra',
+        role: 'Coordinator',
+        team: 'IIC UPC',
+        image: 'assets/satya_sharan_sir.webp',
+        linkedin: 'https://www.linkedin.com/in/satya-sharan-mishra-b46008234/',
+        email: 'satyamishra9058@gmail.com'
+      }
+    ],
+    ecellLeadership: [
+      {
+        id: 1,
+        name: 'Deepak Mishra',
+        role: 'President',
+        team: 'Leadership',
+        image: 'assets/Deepak.png',
+        linkedin: 'https://www.linkedin.com/in/deepak-mishra-596231332/',
+        email: 'deepakmishra67482@gmail.com'
+      },
+      {
+        id: 2,
+        name: 'Pratyasha Singh',
+        role: 'Vice President',
+        team: 'Leadership',
+        image: 'assets/Pratyasha.png',
+        linkedin: 'https://www.linkedin.com/in/pratyasha-singh-39b82031a/',
+        email: 'spratyasha13@gmail.com'
+      },
+      {
+        id: 3,
+        name: 'Krishna Mishra',
+        role: 'Convener',
+        team: 'Leadership',
+        image: 'assets/Krishna.png',
+        linkedin: 'https://www.linkedin.com/in/krishna-mishra-67a982293/',
+        email: 'mishra.krishna9646@gmail.com'
+      },
+      {
+        id: 4,
+        name: 'Shubhi Tripathi',
+        role: 'Co-convener',
+        team: 'Leadership',
+        image: 'assets/shubhi.webp',
+        linkedin: 'https://www.linkedin.com/in/shubhi-tripathi-a3174431a/',
+        email: 'Shubhi01vns@gmail.com'
+      }
+    ],
+    teams: {
+      finance: {
+        head: {
+          id: 5,
+          name: 'Kshitij Baranwal',
+          role: 'Finance Head',
+          team: 'Finance Team',
+          image: 'assets/Kshitij.png',
+          linkedin: 'https://www.linkedin.com/in/kshitij-baranwal/',
+          email: 'baranwal.kshitij99@gmail.com'
+        },
+        members: [
+          {
+            id: 14,
+            name: 'Khushi Jaiswal',
+            role: 'Member',
+            team: 'Finance Team',
+            image: 'assets/Khushi.png',
+            linkedin: 'https://www.linkedin.com/in/khushi-jaiswal-2b0958381/',
+            email: 'Jaiswalkhushi2205@gmail.com'
+          }
+        ]
+      },
+      creative: {
+        head: {
+          id: 6,
+          name: 'Jagriti Agrawal',
+          role: 'Creative Head',
+          team: 'Creative Team',
+          image: 'assets/Jagriti.png',
+          linkedin: 'https://www.linkedin.com/in/jagriti-agrawal-1611b5354/',
+          email: 'Jagritiagrawal403@gmail.com'
+        },
+        members: [
+          {
+            id: 11,
+            name: 'Sanjeevni Rajesh',
+            role: 'Member',
+            team: 'Creative Team',
+            image: 'assets/Sanjeevni.png',
+            linkedin: 'https://www.linkedin.com/in/sanjeevani-rajesh-138bb9321/',
+            email: 'Sanjeevanirajesh55@gmail.com'
+          },
+          {
+            id: 12,
+            name: 'Harsh Pandey',
+            role: 'Member',
+            team: 'Creative Team',
+            image: 'assets/Harsh1.png',
+            linkedin: 'https://www.linkedin.com/in/harsh-pandey-5487a3381/',
+            email: 'pandeyharsh49380@gmail.com'
+          }
+        ]
+      },
+      social: {
+        head: {
+          id: 7,
+          name: 'Tushar Keshari',
+          role: 'Social Media Head',
+          team: 'Social Media Team',
+          image: 'assets/tushar.webp',
+          linkedin: 'https://www.linkedin.com/in/tushar-keshari-5a6a57331/',
+          email: 'usharkeshari93@gmail.com'
+        },
+        members: [
+          {
+            id: 13,
+            name: 'Ashmita Raghuvanshi',
+            role: 'Member',
+            team: 'Social Media Team',
+            image: 'assets/Ashmita.png',
+            linkedin: 'https://www.linkedin.com/in/ashmita-raghuvanshi-77870232a/',
+            email: 'r.ashmitaraghuvanshi@gmail.com'
+          }
+        ]
+      },
+      events: {
+        head: {
+          id: 8,
+          name: 'Priyanshu Singh',
+          role: 'Event Head',
+          team: 'Event Management Team',
+          image: 'assets/Priyanshu.png',
+          linkedin: 'https://www.linkedin.com/in/priyanshu-singh-84a79b31a/',
+          email: 'priyanshusingh06343@gmail.com'
+        },
+        members: [
+          {
+            id: 15,
+            name: 'Swikriti Jaiswal',
+            role: 'Member',
+            team: 'Event Management Team',
+            image: 'assets/Swikriti.png',
+            linkedin: 'https://www.linkedin.com/in/swikriti-jaiswal-a01896375/',
+            email: 'swikriti0306@gmail.com'
+          },
+          {
+            id: 16,
+            name: 'Oshika Singh',
+            role: 'Member',
+            team: 'Event Management Team',
+            image: 'assets/Oshika.png',
+            linkedin: 'https://www.linkedin.com/in/oshika-singh-473320373/',
+            email: 'singhoshika6121@gmail.com'
+          }
+        ]
+      },
+      pr: {
+        head: {
+          id: 9,
+          name: 'Harsh Singh',
+          role: 'PR Head',
+          team: 'Public Relations Team',
+          image: 'assets/harsh2.webp',
+          linkedin: 'https://www.linkedin.com/in/harsh-singh-9a9b04331/',
+          email: 'harsh40357@gmail.com'
+        },
+        members: [
+          {
+            id: 17,
+            name: 'Niraj Prajapati',
+            role: 'Member',
+            team: 'Public Relations Team',
+            image: 'assets/Neeraj.jpeg',
+            linkedin: 'https://www.linkedin.com/in/niraj-prajapati-711522384/',
+            email: 'nkp.889664@gmail.com'
+          }
+        ]
+      },
+      tech: {
+        head: {
+          id: 10,
+          name: 'Suyogy Shah',
+          role: 'Tech Head',
+          team: 'Tech Team',
+          image: 'assets/Suyogy.jpeg',
+          linkedin: 'https://www.linkedin.com/in/suyogy-shah-4b1678370/',
+          email: 'suyogyshah709@gmail.com'
+        },
+        members: [
+          {
+            id: 18,
+            name: 'Rishu Vishwakarma',
+            role: 'Member',
+            team: 'Tech Team',
+            image: 'assets/Rishu.png',
+            linkedin: 'https://www.linkedin.com/in/rishu-vishwakarma-441682381/',
+            email: 'rishuvishwakarma990@gmail.com'
+          },
+          {
+            id: 19,
+            name: 'Aaditya Dubey',
+            role: 'Member',
+            team: 'Tech Team',
+            image: 'assets/Aaditya.webp',
+            linkedin: 'https://www.linkedin.com/in/aadityadubey/',
+            email: 'aadityadubey219@gmail.com'
+          },
+        ]
+      }
+    }
+  },
+  '2023-24': {
+    iicHeads: [],
+    ecellLeadership: [],
+    teams: {}
+  },
+  '2022-23': {
+    iicHeads: [],
+    ecellLeadership: [],
+    teams: {}
+  }
+};
+
+// Startups Page Sample Data Structure
+
+// export const STARTUPS_DATA = [
+//   {
+//     id: 1,
+//     name: 'EduTech Solutions',
+//     tagline: 'Revolutionizing Learning for Rural India',
+//     description: 'An AI-powered platform making quality education accessible to students in remote areas through vernacular content and adaptive learning.',
+//     founder: 'Rahul Sharma',
+//     year: 2024,
+//     stage: 'Seed',
+//     funding: '₹25L',
+//     sector: 'EdTech',
+//     logo: 'assets/startup-logo1.png',
+//     image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80',
+//     website: '#',
+//     status: 'Active'
+//   },
+//   {}
+// ];

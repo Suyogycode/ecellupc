@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite' // Keeping your Tailwind setup
-import { VitePWA } from 'vite-plugin-pwa' // The new PWA plugin
+import tailwindcss from '@tailwindcss/vite'
+import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -27,12 +27,12 @@ export default defineConfig({
         scope: '/ecellupc/',
         icons: [
           {
-            src: 'pwa-192x192.png', // Ensure this file is in your 'public' folder
+            src: 'pwa-192x192.png',
             sizes: '192x192',
             type: 'image/png'
           },
           {
-            src: 'pwa-512x512.png', // Ensure this file is in your 'public' folder
+            src: 'pwa-512x512.png',
             sizes: '512x512',
             type: 'image/png'
           }
@@ -40,5 +40,5 @@ export default defineConfig({
       }
     })
   ],
-  base: "/ecellupc/",  // <--- Kept this critical line!
+  base: "/ecellupc/",
 })
