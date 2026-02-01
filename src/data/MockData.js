@@ -7,6 +7,7 @@ export const NAV_LINKS = [
   { name: 'Gallery', path: '/gallery' },
   { name: 'Team', path: '/team' },
   { name: 'Startups', path: '/startups' },
+  { name: 'UdAI', path: '/udai' },
   { name: 'Contact', path: '/contact' },
 ];
 

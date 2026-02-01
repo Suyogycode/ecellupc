@@ -2,7 +2,9 @@ import React from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { ArrowRight, Flame, Target, Globe, Zap, Activity } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import HomeChatWidget from "../../components/HomeChatWidget";
 
+// --- 1. THE "SPARK" VISUAL ---
 const SparkVisual = () => (
   <div className="relative h-[350px] md:h-[500px] w-full bg-white/5 border border-white/10 rounded-t-full rounded-b-3xl backdrop-blur-sm overflow-hidden flex items-center justify-center">
     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-accent/20 rounded-full blur-[80px] animate-pulse" />
@@ -15,6 +17,7 @@ const SparkVisual = () => (
   </div>
 );
 
+// --- 2. BREATHING STATS ---
 const BreathingStats = () => {
   const stats = [
     { label: "Ideas Incubated", value: "50+" },
@@ -26,7 +29,6 @@ const BreathingStats = () => {
   return (
     <div className="relative z-20 px-4 mb-16 -mt-12 md:px-6 md:mb-20 lg:mb-32 md:-mt-16 lg:-mt-24">
       <div className="max-w-6xl p-4 mx-auto border shadow-2xl md:p-6 lg:p-10 bg-white/5 backdrop-blur-xl border-white/10 rounded-xl md:rounded-2xl">
-        {/* Grid: 2 cols on mobile, 4 cols (single line) on desktop */}
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4 lg:gap-8 md:divide-x divide-white/10">
           {stats.map((stat, idx) => (
             <div key={idx} className="px-2 text-center md:px-4 group">
@@ -46,6 +48,7 @@ const BreathingStats = () => {
   );
 };
 
+// --- 3. FEATURE CARDS ---
 const FeatureCard = ({ title, desc, icon: Icon, color, delay }) => (
   <motion.div
     initial={{ opacity: 0, y: 30 }}
@@ -81,7 +84,7 @@ const Home = () => {
 
   return (
     <div className="relative min-h-screen bg-primary-dark">
-      {/* 1. PARALLAX BACKGROUND FIX */}
+
       <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
         <motion.div
           style={{ y: yBg }}
@@ -96,7 +99,6 @@ const Home = () => {
         </motion.div>
       </div>
 
-      {/* 2. HERO */}
       <section className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 pt-5 pb-24 text-center md:px-6 md:pb-32">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -144,7 +146,6 @@ const Home = () => {
 
       <BreathingStats />
 
-      {/* 4. PHILOSOPHY */}
       <section className="relative z-10 px-6 py-20 md:py-32">
         <div className="grid items-center grid-cols-1 gap-12 mx-auto md:gap-20 max-w-7xl lg:grid-cols-2">
           <div className="order-2 lg:order-1">
@@ -156,7 +157,7 @@ const Home = () => {
               Built on the <br /> <span className="text-accent">Ghats of Innovation</span>
             </h2>
             <p className="mb-6 text-base leading-relaxed text-gray-300 md:text-lg">
-              Varanasi is not just a city; it is a continuity. Today, we channel that timeless resilience into modern entrepreneurship. At E-Cell UPC, we believe that every great venture starts with a spark-an idea nurtured by passion and perseverance. Our mission is to ignite that spark within students, empowering them to transform their visions into impactful realities.
+              Varanasi is not just a city; it is a continuity. Today, we channel that timeless resilience into modern entrepreneurship. At E-Cell UPC, we believe that every great venture starts with a spark.
             </p>
           </div>
           <div className="order-1 lg:order-2">
@@ -165,7 +166,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 5. ECOSYSTEM */}
       <section className="relative z-10 py-20 border-t md:py-32 bg-primary-dark/80 backdrop-blur-xl border-white/5">
         <div className="px-6 mx-auto max-w-7xl">
           <div className="mb-16 text-center">
@@ -181,7 +181,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 6. FOOTER */}
       <section className="relative z-20 flex flex-col items-center justify-center py-24 border-t bg-primary-dark border-white/5">
         <h2 className="mb-8 text-3xl font-bold text-white md:text-4xl font-display">Begin Your Journey</h2>
         <Link to="/initiatives">
@@ -190,6 +189,8 @@ const Home = () => {
           </button>
         </Link>
       </section>
+
+      <HomeChatWidget />
     </div>
   );
 };
