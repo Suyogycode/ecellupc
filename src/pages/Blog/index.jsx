@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, User, ArrowLeft, Loader, ArrowRight, ExternalLink } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
 
 const Blog = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedPost, setSelectedPost] = useState(null);
+  const [searchParams] = useSearchParams();
 
-  const RSS_URL = "https://ecellupc.blogspot.com/feeds/posts/default?alt=rss"; 
+  const RSS_URL = "https://ecellupc.blogspot.com/feeds/posts/default?alt=rss";
   const API_URL = `https://api.rss2json.com/v1/api.json?rss_url=${RSS_URL}`;
 
   useEffect(() => {
@@ -16,6 +18,15 @@ const Blog = () => {
       .then(data => {
         if (data.status === 'ok' && data.items) {
           setPosts(data.items);
+
+          // Check if a specific blog is requested via query parameter
+          const blogId = searchParams.get('id');
+          if (blogId) {
+            const post = data.items.find(item => item.link === decodeURIComponent(blogId));
+            if (post) {
+              setSelectedPost(post);
+            }
+          }
         }
         setLoading(false);
       })
@@ -23,7 +34,7 @@ const Blog = () => {
         console.error("Error fetching blogs:", err);
         setLoading(false);
       });
-  }, []);
+  }, [searchParams]);
 
   // --- HELPER 1: CLEAN AUTHOR NAME ---
   const getAuthorName = (author) => {
@@ -43,19 +54,19 @@ const Blog = () => {
   // --- HELPER 3: SMART THUMBNAIL FINDER ---
   const getHighResImage = (post) => {
     let img = post.thumbnail;
-    
+
     // 1. Hunt for <img> tag in content
     if (!img) {
-        const match = post.content.match(/<img[^>]+src="([^">]+)"/);
-        if (match) img = match[1];
+      const match = post.content.match(/<img[^>]+src="([^">]+)"/);
+      if (match) img = match[1];
     }
-    
+
     // 2. Hunt for YouTube Thumbnail
     if (!img) {
-        const ytMatch = post.content.match(/src="[^"]*youtube\.com\/embed\/([^"?]+)/);
-        if (ytMatch && ytMatch[1]) {
-            return `https://img.youtube.com/vi/${ytMatch[1]}/maxresdefault.jpg`;
-        }
+      const ytMatch = post.content.match(/src="[^"]*youtube\.com\/embed\/([^"?]+)/);
+      if (ytMatch && ytMatch[1]) {
+        return `https://img.youtube.com/vi/${ytMatch[1]}/maxresdefault.jpg`;
+      }
     }
 
     // 3. Fallback Image (Generic Tech/Startup)
@@ -63,7 +74,7 @@ const Blog = () => {
 
     // 4. Force High Res for Blogger Images
     return img.replace(/\/s[0-9]+.*?\//, "/s1600/")
-              .replace(/\/w[0-9]+-h[0-9]+.*?\//, "/s1600/"); 
+      .replace(/\/w[0-9]+-h[0-9]+.*?\//, "/s1600/");
   };
 
   // --- HELPER 4: REMOVE DUPLICATE MEDIA (But Keep Videos!) ---
@@ -115,7 +126,7 @@ const Blog = () => {
 
         <div className="max-w-3xl mx-auto">
           {/* Back Button */}
-          <button 
+          <button
             onClick={() => setSelectedPost(null)}
             className="group flex items-center gap-2 text-gray-400 hover:text-white mb-8 transition-colors"
           >
@@ -134,7 +145,7 @@ const Blog = () => {
             <h1 className="text-3xl md:text-5xl font-display font-bold text-white mb-6 leading-tight">
               {selectedPost.title}
             </h1>
-            
+
             <div className="flex items-center justify-between border-b border-white/10 pb-8 mb-8">
               <div className="flex items-center gap-6 text-sm text-gray-400">
                 <span className="flex items-center gap-2">
@@ -150,15 +161,15 @@ const Blog = () => {
 
             {/* Featured Image Header */}
             <div className="w-full aspect-video rounded-2xl overflow-hidden mb-12 border border-white/10 shadow-2xl bg-black/40 relative">
-               <img 
-                 src={getHighResImage(selectedPost)} 
-                 alt={selectedPost.title}
-                 className="w-full h-full object-cover"
-               />
+              <img
+                src={getHighResImage(selectedPost)}
+                alt={selectedPost.title}
+                className="w-full h-full object-cover"
+              />
             </div>
 
             {/* THE CONTENT */}
-            <div 
+            <div
               className="blog-content"
               dangerouslySetInnerHTML={{ __html: cleanContent(selectedPost.content) }}
             />
@@ -168,9 +179,9 @@ const Blog = () => {
               <p className="text-gray-500 italic">
                 Did you enjoy this read?
               </p>
-              <a 
-                href={selectedPost.link} 
-                target="_blank" 
+              <a
+                href={selectedPost.link}
+                target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold transition-all hover:scale-105"
               >
@@ -186,13 +197,13 @@ const Blog = () => {
 
   // --- GRID VIEW ---
   return (
-    <div className="min-h-screen bg-primary-dark pt-28 pb-20 px-6">
+    <div className="min-h-screen bg-primary-dark pt-24 md:pt-28 pb-16 md:pb-20 px-4 md:px-6">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-6xl font-display font-bold text-white mb-4">
+        <div className="text-center mb-12 md:mb-16">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-3 md:mb-4">
             Our <span className="text-accent">Stories</span>
           </h1>
-          <p className="text-gray-400 max-w-2xl mx-auto">
+          <p className="text-gray-400 text-sm md:text-base max-w-2xl mx-auto px-4">
             Insights, updates, and success stories from the E-Cell ecosystem.
           </p>
         </div>
@@ -200,13 +211,13 @@ const Blog = () => {
         {loading && (
           <div className="flex flex-col items-center justify-center h-64 text-accent">
             <Loader size={48} className="animate-spin mb-4" />
-            <p>Fetching latest stories...</p>
+            <p className="text-sm md:text-base">Fetching latest stories...</p>
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {posts.map((post, index) => (
-            <motion.div 
+            <motion.div
               key={index}
               onClick={() => setSelectedPost(post)}
               initial={{ opacity: 0, y: 20 }}
@@ -216,13 +227,13 @@ const Blog = () => {
             >
               <div className="h-56 overflow-hidden relative bg-black/20">
                 <div className="absolute inset-0 bg-primary-dark/10 group-hover:bg-transparent transition-colors z-10"></div>
-                <img 
-                  src={getHighResImage(post)} 
-                  alt={post.title} 
+                <img
+                  src={getHighResImage(post)}
+                  alt={post.title}
                   className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
                 />
               </div>
-              
+
               <div className="p-6 flex flex-col flex-grow">
                 <div className="flex items-center gap-4 text-xs text-gray-400 mb-3">
                   <span className="flex items-center gap-1">
@@ -234,15 +245,15 @@ const Blog = () => {
                     {getAuthorName(post.author)}
                   </span>
                 </div>
-                
+
                 <h3 className="text-xl font-bold text-white mb-3 line-clamp-2 group-hover:text-accent transition-colors">
                   {post.title}
                 </h3>
-                
+
                 <p className="text-gray-400 text-sm line-clamp-3 mb-6 flex-grow">
                   {stripHtml(post.description)}...
                 </p>
-                
+
                 <div className="flex items-center gap-2 text-sm font-bold text-accent mt-auto group-hover:translate-x-2 transition-transform">
                   Read Article <ArrowRight size={16} />
                 </div>

@@ -12,6 +12,10 @@ import Initiatives from './pages/Initiatives';
 import Gallery from './pages/Gallery';
 import Contact from './pages/Contact';
 import Blog from './pages/Blog';
+import Teams from './pages/Teams';
+import Startups from './pages/Startups';
+import GrowYourResume from './pages/GrowYourResume';
+import { Header } from './pages/Home/Header';
 
 // Scroll To Top Component
 const ScrollToTop = () => {
@@ -31,9 +35,13 @@ function App() {
   return (
     <>
       <ScrollToTop />
+
+      {/* Cursor Trail (Optional - Delete this line if you want it gone too) */}
       <CursorTrail />
 
       <div className="relative z-10 flex flex-col min-h-screen">
+        <Header />
+        <Navbar />
         {/* Only show Main Navbar if NOT on Udai page */}
         {!isUdaiPage && <Navbar />}
         
@@ -42,9 +50,12 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/initiatives" element={<Initiatives />} />
+            <Route path="/grow-your-resume" element={<GrowYourResume />} />
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/team" element={<Teams />} />
+            <Route path="/startups" element={<Startups />} />
             <Route path="/udai" element={<Udai />} />
           </Routes>
         </main>
