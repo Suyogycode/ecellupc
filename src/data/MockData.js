@@ -6,6 +6,7 @@ export const NAV_LINKS = [
   { name: 'Initiatives', path: '/initiatives' },
   { name: 'Blogs', path: '/blog' },  // <--- ADD THIS LINE
   { name: 'Gallery', path: '/gallery' },
+  { name: 'UdAI', path: '/udai' },
   { name: 'Contact', path: '/contact' },
 ];
 

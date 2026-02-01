@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import CursorTrail from './components/CursorTrail'; // Keep this? Or delete if unwanted.
 
+import Udai from './pages/Udai';
 // Import Pages
 import Home from './pages/Home';
 import About from './pages/About';
@@ -41,6 +42,7 @@ function App() {
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/udai" element={<Udai />} />
           </Routes>
         </main>
         
