@@ -2,10 +2,10 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import CursorTrail from './components/CursorTrail'; // Keep this? Or delete if unwanted.
+import CursorTrail from './components/CursorTrail'; 
 
-import Udai from './pages/Udai';
 // Import Pages
+import Udai from './pages/Udai';
 import Home from './pages/Home';
 import About from './pages/About';
 import Initiatives from './pages/Initiatives';
@@ -23,16 +23,19 @@ const ScrollToTop = () => {
 };
 
 function App() {
+  const location = useLocation();
+  
+  // Check if we are on the UdAI page to hide standard layout
+  const isUdaiPage = location.pathname === '/udai';
+
   return (
     <>
       <ScrollToTop />
-      
-      {/* Cursor Trail (Optional - Delete this line if you want it gone too) */}
       <CursorTrail />
 
-      {/* Main Content */}
       <div className="relative z-10 flex flex-col min-h-screen">
-        <Navbar />
+        {/* Only show Main Navbar if NOT on Udai page */}
+        {!isUdaiPage && <Navbar />}
         
         <main className="grow">
           <Routes>
@@ -46,7 +49,8 @@ function App() {
           </Routes>
         </main>
         
-        <Footer />
+        {/* Only show Footer if NOT on Udai page */}
+        {!isUdaiPage && <Footer />}
       </div>
     </>
   );

@@ -1,14 +1,11 @@
-import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { HashRouter } from 'react-router-dom' // Import HashRouter
+import { HashRouter } from 'react-router-dom' 
 import './index.css'
 import App from './App.jsx'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    {/* This fixes the 404s on GitHub Pages */}
-    <HashRouter>
-      <App />
-    </HashRouter>
-  </StrictMode>,
+  // <StrictMode> removed to prevent double-firing API calls
+  <HashRouter>
+    <App />
+  </HashRouter>
 )
