@@ -1,16 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import { Send, Sparkles, PenTool, Code, BookOpen, Coffee, User, Plus, AlertTriangle, Trash2 } from 'lucide-react';
+import Groq from "groq-sdk"; // 👈 New Import
+import { Send, Sparkles, PenTool, Code, BookOpen, Coffee, User, Trash2, AlertTriangle } from 'lucide-react';
 import Navbar from '../../components/Navbar';
 import { useLocation } from 'react-router-dom';
 
 // --- CONFIGURATION ---
-// I have restored your key here.
-const API_KEY = "AIzaSyASJROLBUhmlcyt-RS_V_k1kJkAS12gsa8"; 
-const MODEL_NAME = "gemini-2.5-flash"; 
+const API_KEY = import.meta.env.VITE_GROQ_API_KEY; // 👈 Paste your 'gsk_...' key here
+const MODEL_NAME = "llama-3.1-8b-instant"; // Very fast, free model
+
+// Initialize Groq
+// dangerouslyAllowBrowser: true is needed because we are running on frontend (Vite)
+const groq = new Groq({ apiKey: API_KEY, dangerouslyAllowBrowser: true });
 
 const Udai = () => {
-  // 1. HOOKS (Inside component)
   const location = useLocation();
   const [messages, setMessages] = useState([]); 
   const [input, setInput] = useState('');
@@ -21,20 +23,18 @@ const Udai = () => {
   const messagesEndRef = useRef(null);
   const textareaRef = useRef(null);
 
-  // 2. AUTO-START LOGIC (From Home Page)
+  // --- AUTO-START LOGIC ---
   useEffect(() => {
     if (location.state?.startMessage && !hasStarted && messages.length === 0) {
-        // Small delay to ensure UI is ready
+        // Clear history immediately to prevent loops
+        window.history.replaceState({}, document.title);
         setTimeout(() => {
             handleSend(location.state.startMessage);
         }, 100);
-        
-        // Clear history so it doesn't loop
-        window.history.replaceState({}, document.title);
     }
   }, [location]);
 
-  // 3. AUTO-RESIZE TEXTAREA
+  // --- SCROLL & RESIZE ---
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
@@ -42,14 +42,11 @@ const Udai = () => {
     }
   }, [input]);
 
-  // 4. SCROLL LOGIC (Fixed to prevent jumping)
   useEffect(() => {
     if (hasStarted) {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
     }
   }, [messages, isLoading, hasStarted]);
-
-  // --- ACTIONS ---
 
   const startNewChat = () => {
     setMessages([]);
@@ -69,49 +66,53 @@ const Udai = () => {
     setError(null);
     
     // Add User Message
-    const newMessages = [...messages, { role: 'user', text: userText }];
+    const newMessages = [...messages, { role: 'user', content: userText }];
     setMessages(newMessages);
 
     try {
-      const genAI = new GoogleGenerativeAI(API_KEY);
-      const model = genAI.getGenerativeModel({ model: MODEL_NAME });
+      // --- GROQ API CALL ---
+      const chatCompletion = await groq.chat.completions.create({
+        messages: newMessages.map(m => ({
+            role: m.role,
+            content: m.content
+        })),
+        model: MODEL_NAME,
+        temperature: 0.7,
+        max_tokens: 1024,
+      });
 
-      const history = newMessages.map(msg => ({
-        role: msg.role === 'user' ? 'user' : 'model',
-        parts: [{ text: msg.text }]
-      }));
+      const aiResponse = chatCompletion.choices[0]?.message?.content || "No response received.";
 
-      const chat = model.startChat({ history: history.slice(0, -1) });
-      const result = await chat.sendMessage(userText);
-      const response = await result.response;
-      const text = response.text();
-
-      setMessages(prev => [...prev, { role: 'model', text: text }]);
+      // Add AI Message
+      setMessages(prev => [...prev, { role: 'assistant', content: aiResponse }]);
 
     } catch (err) {
       console.error(err);
       let errorMsg = "Connection interrupted.";
-      if (err.message.includes("404")) errorMsg = `Model '${MODEL_NAME}' not found. Try 'gemini-1.5-flash'.`;
-      if (err.message.includes("API key")) errorMsg = "Invalid API Key.";
+      if (err.message.includes("429")) errorMsg = "Traffic is high. Please wait 10 seconds.";
+      if (err.message.includes("401")) errorMsg = "Invalid Groq API Key.";
       setError(errorMsg);
       
-      // If it failed on the very first message, reset the view so they can try again
       if (messages.length === 0) setHasStarted(false);
     } finally {
       setIsLoading(false);
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
+  };
+
   return (
-    // OUTER CONTAINER: Locked to screen height to prevent full-page scroll
     <div className="h-screen w-full bg-[#0a0b14] text-white font-sans selection:bg-orange-500/30 overflow-hidden flex flex-col">
       
-      {/* 1. NAVBAR (Fixed) */}
       <div className="fixed top-0 left-0 w-full z-50">
         <Navbar />
       </div>
 
-      {/* 2. MAIN AREA (Scrolls internally) */}
       <main className="flex-1 overflow-y-auto w-full relative scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-transparent pt-24">
         
         {hasStarted && (
@@ -126,7 +127,6 @@ const Udai = () => {
 
         <div className="max-w-3xl mx-auto px-4 min-h-full flex flex-col pb-32">
           
-          {/* LANDING VIEW */}
           {!hasStarted && (
             <div className="flex-1 flex flex-col justify-center items-center gap-8 animate-in fade-in zoom-in duration-500 my-auto">
               <div className="text-center space-y-2">
@@ -143,7 +143,7 @@ const Udai = () => {
                   Ignite your ideas.
                 </h1>
                 <p className="text-gray-500 text-lg">
-                  How can the E-Cell UdAI help you today?
+                  Powered by Llama 3 on Groq
                 </p>
               </div>
 
@@ -156,13 +156,12 @@ const Udai = () => {
             </div>
           )}
 
-          {/* CHAT VIEW */}
           {hasStarted && (
             <div className="space-y-6 pt-4">
               {messages.map((msg, idx) => (
                 <div key={idx} className={`flex gap-4 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   
-                  {msg.role === 'model' && (
+                  {msg.role !== 'user' && (
                     <div className="w-8 h-8 rounded-full bg-[#1c1d29] border border-white/10 flex items-center justify-center shrink-0 mt-1">
                       <Sparkles size={14} className="text-orange-500" />
                     </div>
@@ -174,16 +173,17 @@ const Udai = () => {
                         ? 'bg-[#2A2B36] text-white rounded-tr-sm border border-white/5' 
                         : 'bg-transparent text-gray-300'
                       }`}>
-                        {msg.role === 'model' ? (
+                        {/* We use 'content' for Groq/OpenAI format instead of 'text' */}
+                        {msg.role !== 'user' ? (
                            <div dangerouslySetInnerHTML={{ 
-                             __html: msg.text
+                             __html: msg.content
                                .replace(/\*\*(.*?)\*\*/g, '<strong class="text-orange-100 font-semibold">$1</strong>')
                                .replace(/### (.*?)\n/g, '<h3 class="text-lg font-bold text-white mt-4 mb-2">$1</h3>')
                                .replace(/^- (.*)/gm, '<li class="ml-4 list-disc">$1</li>')
                                .replace(/\n/g, '<br />')
                            }} />
                         ) : (
-                          msg.text
+                          msg.content
                         )}
                      </div>
                   </div>
@@ -222,7 +222,7 @@ const Udai = () => {
         </div>
       </main>
 
-      {/* 3. INPUT AREA (Fixed at bottom) */}
+      {/* INPUT AREA */}
       <div className="flex-none bg-[#0a0b14]/80 backdrop-blur-md border-t border-white/5 pt-4 pb-6 px-4 z-40">
         <div className="max-w-3xl mx-auto relative">
            <div className={`bg-[#1E1F29] border border-white/10 rounded-2xl flex items-end gap-2 p-2 shadow-2xl transition-all ${input.trim() ? 'ring-1 ring-orange-500/30' : ''}`}>
@@ -230,12 +230,7 @@ const Udai = () => {
                 ref={textareaRef}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                onKeyDown={(e) => {
-                    if (e.key === 'Enter' && !e.shiftKey) {
-                        e.preventDefault();
-                        handleSend();
-                    }
-                }}
+                onKeyDown={handleKeyDown}
                 placeholder={hasStarted ? "Reply to UdAI..." : "Ask about startups, incubation, or funding..."}
                 className="w-full bg-transparent text-gray-200 placeholder-gray-500 p-3 max-h-32 min-h-[44px] resize-none focus:outline-none"
                 rows={1}
@@ -249,7 +244,7 @@ const Udai = () => {
               </button>
            </div>
            <p className="text-center text-[11px] text-gray-600 mt-3 font-medium">
-             UdAI can make mistakes. Verify important info.
+             UdAI can make mistakes. Powered by Groq.
            </p>
         </div>
       </div>
