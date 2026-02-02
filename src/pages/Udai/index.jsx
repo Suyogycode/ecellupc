@@ -10,6 +10,45 @@ const MODEL_NAME = "llama-3.1-8b-instant";
 
 const groq = new Groq({ apiKey: API_KEY, dangerouslyAllowBrowser: true });
 
+// ✅ FIX: Moved InputBox OUTSIDE the main component
+// We pass all the necessary data as 'props' now
+const InputBox = ({ input, setInput, handleSend, isLoading, hasStarted, textareaRef, handleKeyDown }) => (
+  <div className={`w-full max-w-3xl relative transition-all duration-500`}>
+      <div className={`bg-[#1E1F29] border border-white/10 rounded-2xl flex items-end gap-2 p-1.5 md:p-2 shadow-2xl transition-all ${input.trim() ? 'ring-1 ring-orange-500/30' : ''}`}>
+      <textarea
+          ref={textareaRef}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder={hasStarted ? "Reply to UdAI..." : "Ask about startups, incubation..."}
+          className="w-full bg-transparent text-gray-200 placeholder-gray-500 p-2.5 md:p-3 max-h-32 min-h-[44px] text-[15px] resize-none focus:outline-none"
+          rows={1}
+          autoFocus={!hasStarted}
+      />
+      <button 
+          onClick={() => handleSend()}
+          disabled={!input.trim() || isLoading}
+          className={`p-2.5 rounded-xl mb-0.5 transition-all shrink-0 ${input.trim() ? 'bg-orange-500 text-white hover:bg-orange-600 shadow-lg shadow-orange-500/20' : 'bg-white/5 text-gray-500 cursor-not-allowed'}`}
+      >
+          <Send size={18} />
+      </button>
+      </div>
+      <p className="text-center text-[10px] md:text-[11px] text-gray-600 mt-2 font-medium">
+          UdAI can make mistakes. Powered by Groq.
+      </p>
+  </div>
+);
+
+const SuggestionChip = ({ icon, label, onClick }) => (
+  <button 
+    onClick={onClick}
+    className="flex items-center justify-center gap-2 px-3 py-2.5 bg-[#1E1F29] hover:bg-[#2A2B36] border border-white/5 hover:border-orange-500/30 rounded-xl text-xs font-medium text-gray-300 transition-all cursor-pointer group w-full active:scale-95"
+  >
+    <span className="text-gray-500 group-hover:text-orange-400 transition-colors shrink-0">{icon}</span>
+    <span className="truncate">{label}</span>
+  </button>
+);
+
 const Udai = () => {
   const location = useLocation();
   const [messages, setMessages] = useState([]); 
@@ -21,7 +60,6 @@ const Udai = () => {
   const messagesEndRef = useRef(null);
   const textareaRef = useRef(null);
 
-  // --- AUTO-START LOGIC ---
   useEffect(() => {
     if (location.state?.startMessage && !hasStarted && messages.length === 0) {
         window.history.replaceState({}, document.title);
@@ -31,7 +69,6 @@ const Udai = () => {
     }
   }, [location]);
 
-  // --- SCROLL & RESIZE ---
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
@@ -98,43 +135,13 @@ const Udai = () => {
     }
   };
 
-  // --- HELPER COMPONENT FOR INPUT BOX (Used in two places) ---
-  const InputBox = ({ isCentered }) => (
-    <div className={`w-full max-w-3xl relative transition-all duration-500 ${isCentered ? 'scale-100' : ''}`}>
-        <div className={`bg-[#1E1F29] border border-white/10 rounded-2xl flex items-end gap-2 p-1.5 md:p-2 shadow-2xl transition-all ${input.trim() ? 'ring-1 ring-orange-500/30' : ''}`}>
-        <textarea
-            ref={textareaRef}
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder={hasStarted ? "Reply to UdAI..." : "Ask your question..."}
-            className="w-full bg-transparent text-gray-200 placeholder-gray-500 p-2.5 md:p-3 max-h-32 min-h-[44px] text-[15px] resize-none focus:outline-none"
-            rows={1}
-            autoFocus={!hasStarted}
-        />
-        <button 
-            onClick={() => handleSend()}
-            disabled={!input.trim() || isLoading}
-            className={`p-2.5 rounded-xl mb-0.5 transition-all shrink-0 ${input.trim() ? 'bg-orange-500 text-white hover:bg-orange-600 shadow-lg shadow-orange-500/20' : 'bg-white/5 text-gray-500 cursor-not-allowed'}`}
-        >
-            <Send size={18} />
-        </button>
-        </div>
-        <p className="text-center text-[10px] md:text-[11px] text-gray-600 mt-2 font-medium">
-            UdAI can make mistakes. Verify the response.
-        </p>
-    </div>
-  );
-
   return (
     <div className="h-[100dvh] w-full bg-[#0a0b14] text-white font-sans selection:bg-orange-500/30 overflow-hidden flex flex-col relative">
       
-      {/* Navbar Container */}
       <div className="fixed top-0 left-0 w-full z-50">
         <Navbar />
       </div>
 
-      {/* Main Chat Area */}
       <main className="flex-1 overflow-y-auto w-full relative scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-transparent pt-20 md:pt-24 pb-4">
         
         {hasStarted && (
@@ -149,7 +156,6 @@ const Udai = () => {
 
         <div className="max-w-3xl mx-auto px-3 md:px-4 min-h-full flex flex-col pb-4">
           
-          {/* WELCOME SCREEN (Includes Center Input) */}
           {!hasStarted && (
             <div className="flex-1 flex flex-col justify-center items-center gap-6 animate-in fade-in zoom-in duration-500 my-auto px-4 w-full">
               <div className="text-center space-y-2 md:space-y-3">
@@ -170,12 +176,20 @@ const Udai = () => {
                 </p>
               </div>
 
-              {/* CENTER SEARCH BOX (Only visible when !hasStarted) */}
+              {/* CENTER SEARCH BOX */}
               <div className="w-full max-w-2xl py-4">
-                 <InputBox isCentered={true} />
+                 {/* ✅ Passing Props explicitly */}
+                 <InputBox 
+                    input={input}
+                    setInput={setInput}
+                    handleSend={handleSend}
+                    isLoading={isLoading}
+                    hasStarted={hasStarted}
+                    textareaRef={textareaRef}
+                    handleKeyDown={handleKeyDown}
+                 />
               </div>
 
-              {/* Suggestions Grid - 4 Columns on Desktop, 2 on Mobile */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2 w-full max-w-3xl mt-2">
                 <SuggestionChip icon={<PenTool size={14}/>} label="Pitch Draft" onClick={() => handleSend("Help me draft a 1-minute elevator pitch for a fintech startup.")} />
                 <SuggestionChip icon={<Code size={14}/>} label="MVP Stack" onClick={() => handleSend("What tech stack should I use for an E-Commerce MVP?")} />
@@ -185,9 +199,9 @@ const Udai = () => {
             </div>
           )}
 
-          {/* MESSAGES LIST (Only visible when hasStarted) */}
+          {/* MESSAGES LIST */}
           {hasStarted && (
-            <div className="space-y-6 pt-6 pb-28"> {/* Increased padding bottom to clear fixed input */}
+            <div className="space-y-6 pt-6 pb-28">
               {messages.map((msg, idx) => (
                 <div key={idx} className={`flex gap-3 md:gap-4 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   
@@ -251,11 +265,20 @@ const Udai = () => {
         </div>
       </main>
 
-      {/* BOTTOM INPUT AREA (Only visible when hasStarted) */}
+      {/* BOTTOM INPUT AREA */}
       {hasStarted && (
         <div className="flex-none bg-[#0a0b14]/95 backdrop-blur-xl border-t border-white/5 pt-3 pb-6 px-3 md:px-4 z-50 animate-in slide-in-from-bottom-10 duration-300">
             <div className="max-w-3xl mx-auto">
-                <InputBox isCentered={false} />
+                {/* ✅ Passing Props explicitly here too */}
+                <InputBox 
+                    input={input}
+                    setInput={setInput}
+                    handleSend={handleSend}
+                    isLoading={isLoading}
+                    hasStarted={hasStarted}
+                    textareaRef={textareaRef}
+                    handleKeyDown={handleKeyDown}
+                 />
             </div>
         </div>
       )}
@@ -263,16 +286,5 @@ const Udai = () => {
     </div>
   );
 };
-
-// FIX: Optimized SuggestionChip for horizontal layout & smaller size
-const SuggestionChip = ({ icon, label, onClick }) => (
-  <button 
-    onClick={onClick}
-    className="flex items-center justify-center gap-2 px-3 py-2.5 bg-[#1E1F29] hover:bg-[#2A2B36] border border-white/5 hover:border-orange-500/30 rounded-xl text-xs font-medium text-gray-300 transition-all cursor-pointer group w-full active:scale-95"
-  >
-    <span className="text-gray-500 group-hover:text-orange-400 transition-colors shrink-0">{icon}</span>
-    <span className="truncate">{label}</span>
-  </button>
-);
 
 export default Udai;
