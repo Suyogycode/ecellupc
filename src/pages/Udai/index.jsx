@@ -20,7 +20,7 @@ const InputBox = ({ input, setInput, handleSend, isLoading, hasStarted, textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder={hasStarted ? "Reply to UdAI..." : "Ask about startups, incubation..."}
+          placeholder={hasStarted ? "Reply to UdAI..." : "Ask your question..."}
           className="w-full bg-transparent text-gray-200 placeholder-gray-500 p-2.5 md:p-3 max-h-32 min-h-[44px] text-[15px] resize-none focus:outline-none"
           rows={1}
           autoFocus={!hasStarted}
@@ -34,7 +34,7 @@ const InputBox = ({ input, setInput, handleSend, isLoading, hasStarted, textarea
       </button>
       </div>
       <p className="text-center text-[10px] md:text-[11px] text-gray-600 mt-2 font-medium">
-          UdAI can make mistakes. Powered by Groq.
+          UdAI can make mistakes. Please double check response.
       </p>
   </div>
 );

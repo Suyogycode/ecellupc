@@ -16,7 +16,7 @@ const EventCalendar = () => {
 
   // TARGET DATE: Feb 5, 2026 11:00 AM (Adjust year as needed)
   useEffect(() => {
-    const targetDate = new Date("February 5, 2026 11:00:00").getTime();
+    const targetDate = new Date("February 9, 2026 11:00:00").getTime();
 
     const interval = setInterval(() => {
       const now = new Date().getTime();
@@ -50,9 +50,9 @@ const EventCalendar = () => {
             <span className="inline-block py-1 px-2 md:px-3 rounded-full bg-accent/20 text-accent text-[10px] md:text-xs font-bold uppercase tracking-wider mb-3 md:mb-4 border border-accent/20">
               Upcoming Flagship Event
             </span>
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold text-white mb-2">Founders Talk</h2>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold text-white mb-2">Usecase of AI</h2>
             <p className="text-gray-300 text-sm md:text-base mb-6 md:mb-8">
-              Interactive session with unicorns on the future of Indian Entrepreneurship.
+              Interactive event focusing of AI usecase in Acadamic life.
             </p>
 
             {/* The Real-Time Countdown Grid */}
@@ -90,8 +90,8 @@ const EventCalendar = () => {
                 <div className="w-0.5 h-full bg-white/10 group-last:bg-transparent mt-1"></div>
               </div>
               <div className="pb-8">
-                <p className="text-xs text-accent font-bold mb-1">Feb 05</p>
-                <h4 className="text-lg font-bold text-white">Founders Talk</h4>
+                <p className="text-xs text-accent font-bold mb-1">Feb 09</p>
+                <h4 className="text-lg font-bold text-white">AI event</h4>
                 <p className="text-gray-400 text-sm">Rajshree Hall • 11:00 AM</p>
               </div>
             </div>
