@@ -29,6 +29,7 @@ jobs:
         env:
           # This tells the build to use the Secret you saved in GitHub Settings
           VITE_GROQ_API_KEY: ${{ secrets.VITE_GROQ_API_KEY }}
+          VITE_HF_API_KEY: ${{ secrets.VITE_HF_API_KEY }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

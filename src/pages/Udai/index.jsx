@@ -1,161 +1,20 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Groq from "groq-sdk"; 
-import { Send, Sparkles, PenTool, Code, BookOpen, Coffee, User, Trash2, AlertTriangle, ImagePlus, X, Download } from 'lucide-react';
+import { Sparkles, PenTool, Code, BookOpen, Coffee, User, Trash2, AlertTriangle, ImagePlus, Download } from 'lucide-react';
 import Navbar from '../../components/Navbar';
 import { useLocation } from 'react-router-dom';
-import mermaid from 'mermaid';
-import Zoom from 'react-medium-image-zoom';
-import 'react-medium-image-zoom/dist/styles.css';
 
-// --- INITIALIZE MERMAID ---
-mermaid.initialize({
-  startOnLoad: false,
-  theme: 'dark',
-  fontFamily: 'Inter, sans-serif',
-});
+// Import our newly refactored components
+// Remove the '/components' part from the paths
+import MermaidDiagram from './MermaidDiagram';
+import ChatInput from './ChatInput';
+import SuggestionChip from './SuggestionChip';
 
-// --- MERMAID RENDERER COMPONENT WITH DEBUG TOGGLE ---
-const MermaidDiagram = ({ chart }) => {
-  const [svgUrl, setSvgUrl] = useState(null);
-  const [showCode, setShowCode] = useState(false);
-  const ref = useRef(null);
-
-  useEffect(() => {
-    if (chart && ref.current && !showCode) {
-        try {
-            mermaid.run({
-                nodes: [ref.current],
-            }).then(() => {
-                const svgElement = ref.current.querySelector('svg');
-                if (svgElement) {
-                    const svgData = new XMLSerializer().serializeToString(svgElement);
-                    const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
-                    setSvgUrl(URL.createObjectURL(svgBlob));
-                }
-            }).catch(e => console.error("Mermaid Render Error", e));
-        } catch (e) {
-            console.error("Mermaid Sync Error", e);
-        }
-    }
-  }, [chart, showCode]);
-
-  return (
-    <div className="my-6 relative group flex flex-col gap-2">
-      
-      {/* View Source Toggle Button */}
-      <div className="flex justify-end px-2">
-        <button 
-            onClick={() => setShowCode(!showCode)}
-            className="flex items-center gap-1.5 text-xs font-mono text-gray-500 hover:text-orange-400 transition-colors bg-[#1E1F29] px-2 py-1 rounded-md border border-white/5 shadow-sm"
-        >
-            <Code size={12} />
-            {showCode ? "Hide Source" : "View Source"}
-        </button>
-      </div>
-
-      <div className="bg-[#11121a] p-6 rounded-2xl border border-white/10 overflow-hidden relative min-h-[150px]">
-        {!showCode ? (
-            <Zoom>
-                <div 
-                  ref={ref} 
-                  className="w-full h-full flex items-center justify-center text-sm" 
-                >
-                    {chart}
-                </div>
-            </Zoom>
-        ) : (
-            // The Raw Code View
-            <pre className="text-xs text-orange-200/80 overflow-x-auto font-mono whitespace-pre-wrap">
-                {chart}
-            </pre>
-        )}
-        
-        {/* Download Button */}
-        {svgUrl && !showCode && (
-            <a 
-                href={svgUrl} 
-                download={`diagram-${Date.now()}.svg`}
-                className="absolute top-4 right-4 p-2 bg-[#1E1F29] border border-white/10 rounded-lg text-gray-400 hover:text-white hover:border-orange-500/50 transition-all opacity-0 group-hover:opacity-100"
-                title="Download SVG"
-            >
-                <Download size={16} />
-            </a>
-        )}
-      </div>
-    </div>
-  );
-};
-
-// --- CONFIGURATION ---
 const API_KEY = import.meta.env.VITE_GROQ_API_KEY; 
+const HF_API_KEY = import.meta.env.VITE_HF_API_KEY; 
 const MODEL_NAME = "meta-llama/llama-4-scout-17b-16e-instruct"; 
 
 const groq = new Groq({ apiKey: API_KEY, dangerouslyAllowBrowser: true });
-
-const InputBox = ({ input, setInput, handleSend, isLoading, hasStarted, textareaRef, handleKeyDown, imageBase64, handleImageUpload, removeImage }) => {
-  const fileInputRef = useRef(null);
-
-  return (
-  <div className={`w-full max-w-3xl relative transition-all duration-500`}>
-      {imageBase64 && (
-          <div className="absolute -top-16 left-2 bg-[#1E1F29] border border-white/10 rounded-xl p-1.5 shadow-xl z-10 flex items-start gap-2 animate-in fade-in zoom-in duration-200">
-             <img src={imageBase64} alt="Upload preview" className="h-14 w-14 object-cover rounded-lg border border-white/5" />
-             <button onClick={removeImage} className="p-1 bg-red-500/20 text-red-400 rounded-full hover:bg-red-500/40 transition-colors absolute -top-2 -right-2 shadow-sm">
-                 <X size={12} strokeWidth={3} />
-             </button>
-          </div>
-      )}
-
-      <div className={`bg-[#1E1F29] border border-white/10 rounded-2xl flex items-end gap-2 p-1.5 md:p-2 shadow-2xl transition-all ${input.trim() || imageBase64 ? 'ring-1 ring-orange-500/30' : ''}`}>
-      
-      <input 
-        type="file" 
-        accept="image/jpeg, image/png, image/webp" 
-        className="hidden" 
-        ref={fileInputRef} 
-        onChange={handleImageUpload} 
-      />
-      <button 
-        onClick={() => fileInputRef.current?.click()}
-        className="p-2.5 rounded-xl mb-0.5 text-gray-400 hover:text-orange-400 hover:bg-orange-500/10 transition-all shrink-0"
-        title="Upload Image"
-      >
-          <ImagePlus size={20} />
-      </button>
-
-      <textarea
-          ref={textareaRef}
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder={hasStarted ? "Reply to UdAI..." : "Ask a question or upload study notes..."}
-          className="w-full bg-transparent text-gray-200 placeholder-gray-500 p-2.5 md:p-3 max-h-32 min-h-[44px] text-[15px] resize-none focus:outline-none"
-          rows={1}
-          autoFocus={!hasStarted}
-      />
-      <button 
-          onClick={() => handleSend()}
-          disabled={(!input.trim() && !imageBase64) || isLoading}
-          className={`p-2.5 rounded-xl mb-0.5 transition-all shrink-0 ${input.trim() || imageBase64 ? 'bg-orange-500 text-white hover:bg-orange-600 shadow-lg shadow-orange-500/20' : 'bg-white/5 text-gray-500 cursor-not-allowed'}`}
-      >
-          <Send size={18} />
-      </button>
-      </div>
-      <p className="text-center text-[10px] md:text-[11px] text-gray-600 mt-2 font-medium">
-          UdAI can make mistakes. Please double check response.
-      </p>
-  </div>
-)};
-
-const SuggestionChip = ({ icon, label, onClick }) => (
-  <button 
-    onClick={onClick}
-    className="flex items-center justify-center gap-2 px-3 py-2.5 bg-[#1E1F29] hover:bg-[#2A2B36] border border-white/5 hover:border-orange-500/30 rounded-xl text-xs font-medium text-gray-300 transition-all cursor-pointer group w-full active:scale-95"
-  >
-    <span className="text-gray-500 group-hover:text-orange-400 transition-colors shrink-0">{icon}</span>
-    <span className="truncate">{label}</span>
-  </button>
-);
 
 const Udai = () => {
   const location = useLocation();
@@ -168,6 +27,7 @@ const Udai = () => {
   
   const messagesEndRef = useRef(null);
   const textareaRef = useRef(null);
+  const fileInputRef = useRef(null);
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
@@ -229,7 +89,87 @@ const Udai = () => {
     setHasStarted(true); 
     setIsLoading(true);
     setError(null);
-    
+
+    // --- HUGGING FACE IMAGE GEN LOGIC ---
+    if (userText.toLowerCase().startsWith('/image ')) {
+      const basePrompt = userText.substring(7).trim();
+      if (!basePrompt) return;
+
+      const newMessages = [...messages, { role: 'user', content: userText }];
+      setMessages(newMessages);
+
+try {
+        // 1. Let Llama 4 write a beautiful, highly detailed prompt
+        const promptEnhancement = await groq.chat.completions.create({
+            messages: [
+              { role: "system", content: "You are an expert prompt engineer for an AI image generator. Enhance the user's idea into a highly descriptive, vivid, 50-word prompt. Output ONLY the prompt itself." }, 
+              { role: "user", content: basePrompt }
+            ],
+            model: MODEL_NAME,
+            temperature: 0.7,
+            max_tokens: 100,
+        });
+        
+        const enhancedPrompt = promptEnhancement.choices[0]?.message?.content || basePrompt;
+
+        // 2. THE HUGGING FACE RETRY ENGINE
+        let imageBlob = null;
+        let attempts = 0;
+        const maxAttempts = 5; // Will try for about 25 seconds while the model wakes up
+
+        while (attempts < maxAttempts) {
+            try {
+                const response = await fetch("https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0", {
+                    headers: { 
+                        "Authorization": `Bearer ${HF_API_KEY}`,
+                        "Content-Type": "application/json" 
+                    },
+                    method: "POST",
+                    body: JSON.stringify({ inputs: enhancedPrompt }),
+                });
+
+                if (response.ok) {
+                    imageBlob = await response.blob();
+                    break; // Success! Break out of the loop.
+                } 
+                // If we get a 503, the model is booting up.
+                console.log(`Model waking up (Status: ${response.status}). Attempt ${attempts + 1}/${maxAttempts}...`);
+            } catch (err) {
+                // This catches the "Fake CORS" error that hides the 503 model loading
+                console.log(`Network/CORS block caught (Model likely booting up). Attempt ${attempts + 1}/${maxAttempts}...`);
+            }
+            
+            attempts++;
+            if (attempts < maxAttempts) {
+                // Wait 5 seconds before polling the API again
+                await new Promise(resolve => setTimeout(resolve, 5000));
+            }
+        }
+
+        if (!imageBlob) {
+            throw new Error("The AI artist took too long to wake up. Please click send again to finish the job!");
+        }
+
+        const imageUrl = URL.createObjectURL(imageBlob);
+
+        // 3. Render it directly in the chat
+        setMessages(prev => [...prev, { 
+            role: 'assistant', 
+            content: `Here is the illustration for: *"${basePrompt}"*`,
+            generated_image: imageUrl 
+        }]);
+
+      } catch (err) {
+        console.error("Image Gen Error:", err);
+        setError(err.message || "Failed to generate image.");
+        setMessages(prev => prev.slice(0, -1)); 
+      } finally {
+        setIsLoading(false);
+      }
+      return; 
+    }
+
+    // --- STANDARD GROQ CHAT LOGIC ---
     let contentToSend;
     if (currentImage) {
         contentToSend = [
@@ -257,9 +197,9 @@ const Udai = () => {
     } catch (err) {
       console.error(err);
       let errorMsg = "Connection interrupted.";
-      if (err.message.includes("429")) errorMsg = "Traffic is high. Please wait 10 seconds.";
-      if (err.message.includes("401")) errorMsg = "Invalid Groq API Key.";
-      if (err.message.includes("413")) errorMsg = "Image payload is too large.";
+      if (err.message?.includes("429")) errorMsg = "Traffic is high. Please wait 10 seconds.";
+      if (err.message?.includes("401")) errorMsg = "Invalid API Key.";
+      if (err.message?.includes("413")) errorMsg = "Image payload is too large.";
       setError(errorMsg);
       if (messages.length === 0) setHasStarted(false);
     } finally {
@@ -276,13 +216,11 @@ const Udai = () => {
 
   return (
     <div className="h-[100dvh] w-full bg-[#0a0b14] text-white font-sans selection:bg-orange-500/30 overflow-hidden flex flex-col relative">
-      
       <div className="fixed top-0 left-0 w-full z-50">
         <Navbar />
       </div>
 
       <main className="flex-1 overflow-y-auto w-full relative scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-transparent pt-20 md:pt-24 pb-4">
-        
         {hasStarted && (
             <button 
                 onClick={startNewChat}
@@ -294,7 +232,6 @@ const Udai = () => {
         )}
 
         <div className="max-w-3xl mx-auto px-3 md:px-4 min-h-full flex flex-col pb-4">
-          
           {!hasStarted && (
             <div className="flex-1 flex flex-col justify-center items-center gap-6 animate-in fade-in zoom-in duration-500 my-auto px-4 w-full">
               <div className="text-center space-y-2 md:space-y-3">
@@ -311,12 +248,12 @@ const Udai = () => {
                   Ignite your ideas.
                 </h1>
                 <p className="text-gray-500 text-sm md:text-lg text-center max-w-md mx-auto">
-                  Powered by Llama 4 Scout on Groq
+                  Powered by Llama 4 & FLUX.1
                 </p>
               </div>
 
               <div className="w-full max-w-2xl py-4">
-                 <InputBox 
+                 <ChatInput 
                     input={input}
                     setInput={setInput}
                     handleSend={handleSend}
@@ -327,11 +264,12 @@ const Udai = () => {
                     imageBase64={imageBase64}
                     handleImageUpload={handleImageUpload}
                     removeImage={removeImage}
+                    fileInputRef={fileInputRef}
                  />
               </div>
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2 w-full max-w-3xl mt-2">
-                <SuggestionChip icon={<PenTool size={14}/>} label="Pitch Draft" onClick={() => handleSend("Help me draft a 1-minute elevator pitch for a startup.")} />
+                <SuggestionChip icon={<ImagePlus size={14}/>} label="Draw a logo" onClick={() => handleSend("/image A sleek tech startup logo featuring a glowing orange wireframe cube")} />
                 <SuggestionChip icon={<Code size={14}/>} label="MVP Stack" onClick={() => handleSend("What tech stack should I use for an MVP?")} />
                 <SuggestionChip icon={<BookOpen size={14}/>} label="Finance 101" onClick={() => handleSend("Explain Term Sheets and Equity to a beginner.")} />
                 <SuggestionChip icon={<Coffee size={14}/>} label="Life Advice" onClick={() => handleSend("How do I balance college studies with running a startup?")} />
@@ -390,6 +328,16 @@ const Udai = () => {
                               }
                               return null;
                             })}
+                            
+                            {msg.generated_image && (
+                                <div className="mt-4 bg-[#11121a] p-3 rounded-xl border border-white/10 w-fit">
+                                    <img src={msg.generated_image} alt="AI Art" className="rounded-lg w-full max-w-sm object-cover shadow-md" />
+                                    <a href={msg.generated_image} download={`udai-art-${Date.now()}.png`} className="flex items-center gap-2 text-xs font-medium text-orange-400 hover:text-orange-300 transition-colors mt-3 ml-1 bg-orange-500/10 hover:bg-orange-500/20 w-fit px-3 py-1.5 rounded-md">
+                                        <Download size={14} /> Download Art
+                                    </a>
+                                </div>
+                            )}
+
                           </div>
                         ) : (
                           textContent
@@ -434,7 +382,7 @@ const Udai = () => {
       {hasStarted && (
         <div className="flex-none bg-[#0a0b14]/95 backdrop-blur-xl border-t border-white/5 pt-3 pb-6 px-3 md:px-4 z-50 animate-in slide-in-from-bottom-10 duration-300">
             <div className="max-w-3xl mx-auto">
-                <InputBox 
+                <ChatInput 
                     input={input}
                     setInput={setInput}
                     handleSend={handleSend}
@@ -445,6 +393,7 @@ const Udai = () => {
                     imageBase64={imageBase64}
                     handleImageUpload={handleImageUpload}
                     removeImage={removeImage}
+                    fileInputRef={fileInputRef}
                  />
             </div>
         </div>
